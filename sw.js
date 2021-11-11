@@ -27,48 +27,40 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-a49119ca8ee4c671ef15.js"
+    "url": "webpack-runtime-b287a592dd64ed35cc30.js"
   },
   {
-    "url": "styles.a89f14d708b7dff7796b.css"
+    "url": "styles.f00821d6b9cc9581798f.css"
   },
   {
-    "url": "styles-9b6f388623a2ec93d35f.js"
+    "url": "styles-407fe62976dc5310c43e.js"
   },
   {
-    "url": "framework-885503946ee98043c7bd.js"
+    "url": "framework-8e528b732ab2eaadb7b7.js"
   },
   {
-    "url": "app-8b51dbf1e1df086b2f96.js"
+    "url": "app-8f43f4c05b17a67d67cd.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "847f65c854ae9db7335625ba392409c9"
+    "revision": "4edf2f1cd06ec3ba3436f0a4d5b5c0d9"
   },
   {
-    "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-112458cba6cabcf2ceb0.js"
+    "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-b0556ce5127c1a3e2490.js"
   },
   {
-    "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
-    "revision": "f6081b83111aea4128c98944b7fafccc"
-  },
-  {
-    "url": "page-data/app-data.json",
-    "revision": "a24afddb9e0340474344fdfc5dd17372"
-  },
-  {
-    "url": "polyfill-15f9b8c919c0be1eb412.js"
+    "url": "polyfill-c38cd845a4181427323c.js"
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "6c0807859d161d938f737ba622add416"
+    "revision": "36a07f8a9fea29ec2ab2922980c4d7ff"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 workbox.routing.registerRoute(/(\.js$|\.css$|static\/)/, new workbox.strategies.CacheFirst(), 'GET');
 workbox.routing.registerRoute(/^https?:.*\/page-data\/.*\.json/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
-workbox.routing.registerRoute(/^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
 workbox.routing.registerRoute(/^https?:\/\/fonts\.googleapis\.com\/css/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
 
 /* global importScripts, workbox, idbKeyval */
@@ -148,12 +140,12 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   lastNavigationRequest = event.request.url
 
   let { pathname } = new URL(event.request.url)
-  pathname = pathname.replace(new RegExp(`^/leonids`), ``)
+  pathname = pathname.replace(new RegExp(`^`), ``)
 
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/leonids/app-8b51dbf1e1df086b2f96.js`))) {
+  if (!resources || !(await caches.match(`/app-8f43f4c05b17a67d67cd.js`))) {
     return await fetch(event.request)
   }
 
@@ -166,7 +158,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
     }
   }
 
-  const offlineShell = `/leonids/offline-plugin-app-shell-fallback/index.html`
+  const offlineShell = `/offline-plugin-app-shell-fallback/index.html`
   const offlineShellWithKey = workbox.precaching.getCacheKeyForURL(offlineShell)
   return await caches.match(offlineShellWithKey)
 })
